@@ -1,0 +1,15 @@
+[
+    "intro",
+    {
+        "type": "category",
+        "label": "Prepare",
+        "link": {
+            "type": "generated-index"
+        },
+        "items": [
+            "prepare/os-init",
+            "prepare/kernel-upgrade"
+        ]
+    },
+    "others"
+]

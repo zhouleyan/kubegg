@@ -3,8 +3,8 @@
     "message": "Next",
     "description": "The label for version current"
   },
-  "sidebar.docsSidebar.category.Tutorial - Basics": {
-    "message": "Tutorial - Basics",
+  "sidebar.docsSidebar.category.Prepare": {
+    "message": "环境准备",
     "description": "The label for category Tutorial - Basics in sidebar docsSidebar"
   },
   "sidebar.docsSidebar.category.Tutorial - Basics.link.generated-index.description": {
