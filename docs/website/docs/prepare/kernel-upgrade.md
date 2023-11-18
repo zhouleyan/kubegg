@@ -44,7 +44,7 @@ dpkg --list | grep linux-headers
 apt purge linux-headers-6.1.0-13-amd64
 ```
 
-如果使用中的内核缺失头文件，可以使用如下命令安装。
+如果使用中的内核缺失头文件，可以使用如下命令安装
 
 ```bash
 apt install linux-headers-$(uname -r)
@@ -52,7 +52,7 @@ apt install linux-headers-$(uname -r)
 
 ### 保持内核最新（可选）
 
-把如下命令添加到 `/etc/apt/preferences.d/pinning.pref` 文件中（如果没有，可创建）。
+把如下命令添加到 `/etc/apt/preferences.d/pinning.pref` 文件中（如果没有，可创建）
 
 ```bash
 Package: linux-image-amd64 linux-headers-amd64
@@ -62,7 +62,7 @@ Pin-Priority: 900
 
 ## 内核回退
 
-内核版本回退至 `6.1.0-13`。
+内核版本回退至 `6.1.0-13`
 
 ### 查找对应的版本内核
 
@@ -82,13 +82,13 @@ apt install linux-image-6.1.0-13-amd64 linux-headers-6.1.0-13-amd64
 grep menuentry /boot/grub/grub.cfg
 ```
 
-重启进入 `Advanced options for Debian GNU/Linux`。
+重启进入 `Advanced options for Debian GNU/Linux`
 
-选择 `Debian GNU/Linux, with Linux 6.1.0-13-amd64` 进入操作系统。
+选择 `Debian GNU/Linux, with Linux 6.1.0-13-amd64` 进入操作系统
 
 ### 移除不用的内核
 
-查询不包括当前内核版本的其它所有内核版本。
+查询不包括当前内核版本的其它所有内核版本
 
 ```bash
 dpkg -l | tail -n +6| grep -E 'linux-image-[0-9]+'| grep -Fv $(uname -r)
@@ -101,7 +101,7 @@ rc：表示已经被移除
 ii：表示符合移除条件（可移除）
 iU：已进入 apt 安装队列，但还未被安装（不可移除）
 
-我这里的 `6.5.0-0` 内核为可移除状态，可以执行如下命令删除：
+我这里的 `6.5.0-0` 内核为可移除状态，可以执行如下命令删除
 
 ```bash
 apt purge linux-image-6.5.0-0* linux-headers-6.5.0-0*
