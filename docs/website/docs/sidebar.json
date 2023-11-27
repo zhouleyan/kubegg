@@ -11,5 +11,8 @@
             "prepare/kernel-upgrade"
         ]
     },
+    "plan",
+    "dns",
+    "ntp",
     "others"
 ]

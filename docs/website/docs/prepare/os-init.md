@@ -103,14 +103,13 @@ iface ens33 inet static
 systemctl restart networking
 ```
 
-查看 `uuid` 是否唯一
+修改 mac 地址（可选）
+
+查看网卡 mac 地址
 
 ```bash
-cat /sys/class/dmi/id/product_uuid
-5cc44d56-d5d4-c3ab-ee58-96825f0f1d93
+cat /sys/class/net/<network_interface>/address
 ```
-
-修改 mac 地址（可选）
 
 使用 [mac-address-generator](https://miniwebtool.com/mac-address-generator/) 生产 mac 地址
 
