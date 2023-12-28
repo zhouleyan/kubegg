@@ -18,3 +18,41 @@ tmpfile="$$.tmp"
 awk '!x[$0]++{print >"'$tmpfile'"}' /etc/sysctl.conf
 mv $tmpfile /etc/sysctl.conf
 ```
+
+### vim paste
+
+```bash
+:set paste
+```
+
+### 锁定文件
+
+```bash
+# 锁定
+chattr +i /etc
+
+# 解锁
+chattr -i /etc
+```
+
+### 通过 Publickey 进行 SSH 登录
+
+本机 mac 访问 192.168.3.4
+
+```bash
+# 生成 ssh key
+ssh-keygen -t ed25519 -C "zhouleyan's Macbook"
+
+# 上传到目标 host
+ssh-copy-id -i ~/.ssh/id_ed25519 root@192.168.3.4
+
+# 创建普通用户
+useradd -m zhouleyan
+passwd zhouleyan # Zly123456!
+```
+
+### tcpdump 抓包
+
+```bash
+tcpdump -i lo -c 100 -pne tcp -w lo.cap
+```

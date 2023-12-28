@@ -6,7 +6,7 @@
 
 | 系统        | 最低要求            |
 | ----------- | ------------------- |
-| Debian 12.3 | CPU: 2core, RAM: 4G |
+| Debian 12.4 | CPU: 2core, RAM: 4G |
 
 安装系统时，选择最小化安装 + ssh-server
 
@@ -133,6 +133,9 @@ cgroup2fs
 打开 `/etc/apt/sources.list` 文件，替换其中所有内容为国内源地址
 
 ```bash
+mv /etc/apt/sources.list /etc/apt/sources.list.bk
+
+cat <<EOF | tee /etc/apt/sources.list
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware
@@ -145,6 +148,7 @@ deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib
 
 deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware
+EOF
 ```
 
 ### 安装常用软件
@@ -152,8 +156,46 @@ deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main 
 ```bash
 apt update
 apt upgrade -y
-apt -y install vim sudo curl wget bash-completion net-tools telnet openssl tar apt-transport-https ca-certificates gpg chrony locate sysstat
+apt -y install vim sudo curl wget bash-completion net-tools tcpdump bridge-utils tree iftop telnet openssl tar apt-transport-https ca-certificates gpg chrony locate sysstat arping
 apt autoremove
+```
+
+修改 vim 配置，支持复制
+
+```bash
+cat>/etc/vim/vimrc.local<<EOF
+" This file loads the default vim options at the beginning and prevents
+" that they are being loaded again later. All other options that will be set,
+" are added, or overwrite the default settings. Add as many options as you
+" whish at the end of this file.
+
+" Load the defaults
+source \$VIMRUNTIME/defaults.vim
+
+"Prevent the defaults from being loaded again later, if the user doesn't
+" have a local vimrc (~/.vimrc)
+let skip_defaults_vim = 1
+
+
+" Set more options (overwrites settings from /usr/share/vim/[vim-version, example vim82, vim80, etc]/defaults.vim)
+" Add as many options as you whish
+
+"Set the mouse mode to'r'
+if has('mouse')
+  set mouse=r
+endif
+
+set syntax=on
+set confirm
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set number
+set nobackup
+set noswapfile
+set ignorecase
+EOF
 ```
 
 ### 安装 Kubernetes 依赖软件
@@ -180,7 +222,7 @@ apt install ebtables
 apt install iptables
 apt install ethtool
 
-# apt install conntrack ipset ipvsadm jq libseccomp2 nfs-common ceph-common glusterfs-client psmisc rsync socat ebtables iptables ethtool
+apt install conntrack ipset ipvsadm jq libseccomp2 nfs-common ceph-common glusterfs-client psmisc rsync socat ebtables ethtool iptables
 ```
 
 ### 禁用系统 swap
@@ -218,7 +260,7 @@ getenforce
 准备 journal 日志相关目录
 
 ```bash
-mkdir -p /etc/systemd/journald.conf.d
+mkdir -p /etc/systemd/journald.conf.d && \
 mkdir -p /var/log/journal
 ```
 
@@ -268,6 +310,8 @@ modprobe ipt_set
 modprobe ipt_rpfilter
 modprobe ipt_REJECT
 modprobe ipip
+
+modprobe -a br_netfilter ip_vs ip_vs_rr ip_vs_wrr ip_vs_sh nf_conntrack overlay ip_tables ip_set xt_set ipt_set ipt_rpfilter ipt_REJECT ipip
 ```
 
 查看已加载内核模块
@@ -456,48 +500,48 @@ mkdir -p /var/lib/etcd && chown etcd -R /var/lib/etcd
 
 ## 安装 containerd
 
-安装 `containerd` 二进制文件至 `/usr/bin`，版本：`1.7.9`
+安装 `containerd` 二进制文件至 `/usr/bin`，版本：`1.7.11`
 
-安装 `crictl` 二进制文件至 `/usr/bin` 版本：`v1.28.0`
+安装 `crictl` 二进制文件至 `/usr/bin` 版本：`v1.29.0`
 
 创建临时文件夹 `/tmp/kubegg`
 
 ```bash
-mkdir /tmp/kubegg
+mkdir -p /tmp/kubegg
 ```
 
 ### 安装 containerd 二进制文件
 
-下载地址：[https://github.com/containerd/containerd/releases/download/v1.7.9/containerd-1.7.9-linux-amd64.tar.gz](https://github.com/containerd/containerd/releases/download/v1.7.9/containerd-1.7.9-linux-amd64.tar.gz)
+下载地址：[https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-amd64.tar.gz](https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-amd64.tar.gz)
 
 下载 `containerd`
 
 ```bash
-wget https://github.com/containerd/containerd/releases/download/v1.7.9/containerd-1.7.9-linux-amd64.tar.gz -O /tmp/kubegg/containerd-1.7.9-linux-amd64.tar.gz
+wget https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-amd64.tar.gz -O /tmp/kubegg/containerd-1.7.11-linux-amd64.tar.gz
 ```
 
 安装 `containerd` 二进制文件
 
 ```bash
-mkdir -p /usr/bin && tar -zxf /tmp/kubegg/containerd-1.7.9-linux-amd64.tar.gz -C /tmp/kubegg
-mv /tmp/kubegg/bin/* /usr/bin
+mkdir -p /usr/bin && tar -zxf /tmp/kubegg/containerd-1.7.11-linux-amd64.tar.gz -C /tmp/kubegg && \
+mv /tmp/kubegg/bin/* /usr/bin && \
 rm -rf /tmp/kubegg/bin
 ```
 
 ### 安装 crictl 二进制文件
 
-下载地址：[https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.28.0/crictl-v1.28.0-linux-amd64.tar.gz](https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.28.0/crictl-v1.28.0-linux-amd64.tar.gz)
+下载地址：[https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.29.0/crictl-v1.29.0-linux-amd64.tar.gz](https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.29.0/crictl-v1.29.0-linux-amd64.tar.gz)
 
 下载 `crictl`
 
 ```bash
-wget https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.28.0/crictl-v1.28.0-linux-amd64.tar.gz -O /tmp/kubegg/crictl-v1.28.0-linux-amd64.tar.gz
+wget https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.29.0/crictl-v1.29.0-linux-amd64.tar.gz -O /tmp/kubegg/crictl-v1.29.0-linux-amd64.tar.gz
 ```
 
 安装 `crictl` 二进制文件
 
 ```bash
-mkdir -p /usr/bin && tar -zxf /tmp/kubegg/crictl-v1.28.0-linux-amd64.tar.gz -C /usr/bin
+mkdir -p /usr/bin && tar -zxf /tmp/kubegg/crictl-v1.29.0-linux-amd64.tar.gz -C /usr/bin
 ```
 
 ### 安装 runc 二进制文件
@@ -518,18 +562,18 @@ install -m 755 /tmp/kubegg/runc.amd64 /usr/local/sbin/runc
 
 ### 安装 cni 二进制文件
 
-下载地址：[https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni-plugins-linux-amd64-v1.3.0.tgz](https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni-plugins-linux-amd64-v1.3.0.tgz)
+下载地址：[https://github.com/containernetworking/plugins/releases/download/v1.4.0/cni-plugins-linux-amd64-v1.4.0.tgz](https://github.com/containernetworking/plugins/releases/download/v1.4.0/cni-plugins-linux-amd64-v1.4.0.tgz)
 
 下载 `cni`
 
 ```bash
-wget https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni-plugins-linux-amd64-v1.3.0.tgz -O /tmp/kubegg/cni-plugins-linux-amd64-v1.3.0.tgz
+wget https://github.com/containernetworking/plugins/releases/download/v1.4.0/cni-plugins-linux-amd64-v1.4.0.tgz -O /tmp/kubegg/cni-plugins-linux-amd64-v1.4.0.tgz
 ```
 
 安装 `cni` 二进制文件
 
 ```bash
-tar -zxf /tmp/kubegg/cni-plugins-linux-amd64-v1.3.0.tgz -C /opt/cni/bin
+tar -zxf /tmp/kubegg/cni-plugins-linux-amd64-v1.4.0.tgz -C /opt/cni/bin
 ```
 
 ### 创建 containerd systemd unit 文件
@@ -645,7 +689,7 @@ version = 2
     max_container_log_line_size = 16384
     netns_mounts_under_state_dir = false
     restrict_oom_score_adj = false
-    sandbox_image = "registry.kubegg.local/pause:3.8"
+    sandbox_image = "reg.kubegg.io/library/pause:3.9"
     selinux_category_range = 1024
     stats_collect_period = 10
     stream_idle_timeout = "4h0m0s"
@@ -746,9 +790,15 @@ version = 2
 
       [plugins."io.containerd.grpc.v1.cri".registry.configs]
 
+        [plugins."io.containerd.grpc.v1.cri".registry.configs."reg.kubegg.io".tls]
+          insecure_skip_verify = true
+
       [plugins."io.containerd.grpc.v1.cri".registry.headers]
 
       [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."reg.kubegg.io"]
+          endpoint = ["https://reg.kubegg.io"]
 
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
           endpoint = ["https://docker.nju.edu.cn/", "https://kuamavit.mirror.aliyuncs.com"]
@@ -935,12 +985,12 @@ chmod +x /usr/local/bin/cfssl /usr/local/bin/cfssljson
 
 ### 安装 kubectl
 
-下载地址：[https://dl.k8s.io/release/v1.28.4/bin/linux/amd64/kubectl](https://dl.k8s.io/release/v1.28.4/bin/linux/amd64/kubectl)
+下载地址：[https://dl.k8s.io/release/v1.28.5/bin/linux/amd64/kubectl](https://dl.k8s.io/release/v1.28.5/bin/linux/amd64/kubectl)
 
 下载 `kubectl`
 
 ```bash
-wget https://dl.k8s.io/release/v1.28.4/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl
+wget https://dl.k8s.io/release/v1.28.5/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl
 ```
 
 开启 `kubectl` 自动补全
@@ -956,40 +1006,56 @@ source ~/.bashrc
 
 ### 安装 helm
 
-下载地址：[https://get.helm.sh/helm-v3.13.2-linux-amd64.tar.gz](https://get.helm.sh/helm-v3.13.2-linux-amd64.tar.gz)
+下载地址：[https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz](https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz)
 
 下载 `helm`
 
 ```bash
-wget https://get.helm.sh/helm-v3.13.2-linux-amd64.tar.gz -O /tmp/kubegg/helm-v3.13.2-linux-amd64.tar.gz
+wget https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz -O /tmp/kubegg/helm-v3.13.3-linux-amd64.tar.gz
 ```
 
 安装 `helm` 二进制文件
 
 ```bash
-tar -zxf /tmp/kubegg/helm-v3.13.2-linux-amd64.tar.gz -C /tmp/kubegg
-
-mv /tmp/kubegg/linux-amd64/helm /usr/local/bin
-
-rm -rf /tmp/kubegg/linux-amd64
-
+tar -zxf /tmp/kubegg/helm-v3.13.3-linux-amd64.tar.gz -C /tmp/kubegg && \
+mv /tmp/kubegg/linux-amd64/helm /usr/local/bin && \
+rm -rf /tmp/kubegg/linux-amd64 && \
 chmod +x /usr/local/bin/helm
 ```
 
 ### 安装 calicoctl
 
-下载地址：[https://github.com/projectcalico/calico/releases/download/v3.26.4/calicoctl-linux-amd64](https://github.com/projectcalico/calico/releases/download/v3.26.4/calicoctl-linux-amd64)
+下载地址：[https://github.com/projectcalico/calico/releases/download/v3.27.0/calicoctl-linux-amd64](https://github.com/projectcalico/calico/releases/download/v3.27.0/calicoctl-linux-amd64)
 
 下载 `calicoctl`
 
 ```bash
-wget https://github.com/projectcalico/calico/releases/download/v3.26.4/calicoctl-linux-amd64 -O /usr/local/bin/calicoctl
+wget https://github.com/projectcalico/calico/releases/download/v3.27.0/calicoctl-linux-amd64 -O /usr/local/bin/calicoctl && \
+chmod +x /usr/local/bin/calicoctl
 ```
 
-安装 `calicoctl` 二进制文件
+### 安装 cilium cli
 
 ```bash
-chmod +x /usr/local/bin/calicoctl
+CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
+CLI_ARCH=amd64
+if ["$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
+curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
+sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
+rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+```
+
+### 安装 Hubble Client
+
+```bash
+HUBBLE_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/hubble/master/stable.txt)
+HUBBLE_ARCH=amd64
+if ["$(uname -m)" = "aarch64" ]; then HUBBLE_ARCH=arm64; fi
+curl -L --fail --remote-name-all https://github.com/cilium/hubble/releases/download/$HUBBLE_VERSION/hubble-linux-${HUBBLE_ARCH}.tar.gz{,.sha256sum}
+sha256sum --check hubble-linux-${HUBBLE_ARCH}.tar.gz.sha256sum
+sudo tar xzvfC hubble-linux-${HUBBLE_ARCH}.tar.gz /usr/local/bin
+rm hubble-linux-${HUBBLE_ARCH}.tar.gz{,.sha256sum}
 ```
 
 截止此，基础 OS 初始化完毕，后续可基于该 OS 镜像克隆。

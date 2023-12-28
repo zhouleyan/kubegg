@@ -12,6 +12,7 @@
         ]
     },
     "plan",
+    "kubeadm",
     "dns",
     "ntp",
     "others"

@@ -113,3 +113,56 @@ apt autoremove
 ```bash
 shutdown -r now
 ```
+
+## Install Linux Kernel 6.6 on Debian12
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt upgrade
+```
+
+```bash
+sudo apt install lsb-release software-properties-common apt-transport-https ca-certificates curl -y
+```
+
+```bash
+curl -fSsL https://pkgs.zabbly.com/key.asc | gpg --dearmor | sudo tee /usr/share/keyrings/linux-zabbly.gpg > /dev/null
+```
+
+```bash
+codename=$(lsb_release -sc) && echo deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/linux-zabbly.gpg] https://pkgs.zabbly.com/kernel/stable $codename main | sudo tee /etc/apt/sources.list.d/linux-zabbly.list
+```
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install linux-zabbly
+```
+
+```bash
+echo -e "# Used for shielding pcspkr module, this module seems to be related to buzzer.\nblacklist pcspkr" | sudo tee /etc/modprobe.d/blacklist-pcspkr.conf
+```
+
+```bash
+sudo reboot
+```
+
+```bash
+sudo reboot
+```
+
+```bash
+dpkg --list | grep linux-image
+# 卸载制定的旧内核
+apt purge linux-image-6.1.0-13-amd64
+```
+
+```bash
+dpkg --list | grep linux-headers
+apt purge linux-headers-6.1.0-13-amd64
+```
