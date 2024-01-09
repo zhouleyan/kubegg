@@ -996,11 +996,9 @@ wget https://dl.k8s.io/release/v1.28.5/bin/linux/amd64/kubectl -O /usr/local/bin
 开启 `kubectl` 自动补全
 
 ```bash
-echo 'source <(kubectl completion bash)' >>~/.bashrc
-
-# alias
-echo 'alias k=kubectl' >>~/.bashrc
-echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
+echo 'source <(kubectl completion bash)' >>~/.bashrc && \
+echo 'alias k=kubectl' >>~/.bashrc && \
+echo 'complete -o default -F __start_kubectl k' >>~/.bashrc && \
 source ~/.bashrc
 ```
 

@@ -56,3 +56,14 @@ passwd zhouleyan # Zly123456!
 ```bash
 tcpdump -i lo -c 100 -pne tcp -w lo.cap
 ```
+
+### 配置 github SSH
+
+```bash
+cat <<EOF | sudo tee ~/.ssh/config
+Host github.com
+    Hostname ssh.github.com
+    Port 443
+    User git
+EOF
+```
