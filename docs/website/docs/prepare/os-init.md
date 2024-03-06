@@ -187,11 +187,12 @@ endif
 
 set syntax=on
 set confirm
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
 set expandtab
-set number
+" set noexpandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set autoindent
 set nobackup
 set noswapfile
 set ignorecase
@@ -212,6 +213,7 @@ apt install ipset              # ipvs 模式需要
 apt install ipvsadm            # ipvs 模式需要
 apt install jq                 # 轻量 JSON 处理程序，安装 Docker/containerd 查询镜像需要
 apt install libseccomp2        # 安装 containerd 需要
+apt install libseccomp-dev     # 安装 containerd 需要
 apt install nfs-common         # 挂载 nfs 共享文件需要（创建基于 nfs 的 PV 需要）
 apt install ceph-common        # 挂载 ceph 共享文件需要（创建基于 ceph 的 PV 需要）
 apt install glusterfs-client   # 挂载 glusterfs 共享文件需要（创建基于 glusterfs 的 PV 需要）
@@ -222,7 +224,7 @@ apt install ebtables
 apt install iptables
 apt install ethtool
 
-apt install conntrack ipset ipvsadm jq libseccomp2 nfs-common ceph-common glusterfs-client psmisc rsync socat ebtables ethtool iptables
+apt install conntrack ipset ipvsadm jq libseccomp2 libseccomp-dev nfs-common ceph-common glusterfs-client psmisc rsync socat ebtables ethtool iptables
 ```
 
 ### 禁用系统 swap
@@ -486,21 +488,21 @@ useradd -M -c 'Etcd user' -s /sbin/nologin -r etcd || :
 * `/var/lib/etcd`
 
 ```bash
-mkdir -p /usr/local/bin && chown kube -R /usr/local/bin
-mkdir -p /etc/kubernetes && chown kube -R /etc/kubernetes
-mkdir -p /etc/kubernetes/pki && chown kube -R /etc/kubernetes/pki
-mkdir -p /etc/kubernetes/manifests && chown kube -R /etc/kubernetes/manifests
-mkdir -p /usr/local/bin/kube-scripts && chown kube -R /usr/local/bin/kube-scripts
-mkdir -p /usr/libexec/kubernetes/kubelet-plugins/volume/exec && chown kube -R /usr/libexec/kubernetes
-mkdir -p /etc/cni/net.d && chown kube -R /etc/cni
-mkdir -p /opt/cni/bin && chown kube -R /opt/cni
-mkdir -p /var/lib/calico && chown kube -R /var/lib/calico
+mkdir -p /usr/local/bin && chown kube -R /usr/local/bin && \
+mkdir -p /etc/kubernetes && chown kube -R /etc/kubernetes && \
+mkdir -p /etc/kubernetes/pki && chown kube -R /etc/kubernetes/pki && \
+mkdir -p /etc/kubernetes/manifests && chown kube -R /etc/kubernetes/manifests && \
+mkdir -p /usr/local/bin/kube-scripts && chown kube -R /usr/local/bin/kube-scripts && \
+mkdir -p /usr/libexec/kubernetes/kubelet-plugins/volume/exec && chown kube -R /usr/libexec/kubernetes && \
+mkdir -p /etc/cni/net.d && chown kube -R /etc/cni && \
+mkdir -p /opt/cni/bin && chown kube -R /opt/cni && \
+mkdir -p /var/lib/calico && chown kube -R /var/lib/calico && \
 mkdir -p /var/lib/etcd && chown etcd -R /var/lib/etcd
 ```
 
 ## 安装 containerd
 
-安装 `containerd` 二进制文件至 `/usr/bin`，版本：`1.7.11`
+安装 `containerd` 二进制文件至 `/usr/bin`，版本：`1.7.13`
 
 安装 `crictl` 二进制文件至 `/usr/bin` 版本：`v1.29.0`
 
@@ -512,18 +514,18 @@ mkdir -p /tmp/kubegg
 
 ### 安装 containerd 二进制文件
 
-下载地址：[https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-amd64.tar.gz](https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-amd64.tar.gz)
+下载地址：[https://github.com/containerd/containerd/releases/download/v1.7.13/containerd-1.7.13-linux-amd64.tar.gz](https://github.com/containerd/containerd/releases/download/v1.7.13/containerd-1.7.13-linux-amd64.tar.gz)
 
 下载 `containerd`
 
 ```bash
-wget https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-amd64.tar.gz -O /tmp/kubegg/containerd-1.7.11-linux-amd64.tar.gz
+wget https://github.com/containerd/containerd/releases/download/v1.7.13/containerd-1.7.13-linux-amd64.tar.gz -O /tmp/kubegg/containerd-1.7.13-linux-amd64.tar.gz
 ```
 
 安装 `containerd` 二进制文件
 
 ```bash
-mkdir -p /usr/bin && tar -zxf /tmp/kubegg/containerd-1.7.11-linux-amd64.tar.gz -C /tmp/kubegg && \
+mkdir -p /usr/bin && tar -zxf /tmp/kubegg/containerd-1.7.13-linux-amd64.tar.gz -C /tmp/kubegg && \
 mv /tmp/kubegg/bin/* /usr/bin && \
 rm -rf /tmp/kubegg/bin
 ```
@@ -546,12 +548,12 @@ mkdir -p /usr/bin && tar -zxf /tmp/kubegg/crictl-v1.29.0-linux-amd64.tar.gz -C /
 
 ### 安装 runc 二进制文件
 
-下载地址：[https://github.com/opencontainers/runc/releases/download/v1.1.10/runc.amd64](https://github.com/opencontainers/runc/releases/download/v1.1.10/runc.amd64)
+下载地址：[https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64](https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64)
 
 下载 `runc`
 
 ```bash
-wget https://github.com/opencontainers/runc/releases/download/v1.1.10/runc.amd64 -O /tmp/kubegg/runc.amd64
+wget https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64 -O /tmp/kubegg/runc.amd64
 ```
 
 安装 `runc` 二进制文件
@@ -985,12 +987,12 @@ chmod +x /usr/local/bin/cfssl /usr/local/bin/cfssljson
 
 ### 安装 kubectl
 
-下载地址：[https://dl.k8s.io/release/v1.28.5/bin/linux/amd64/kubectl](https://dl.k8s.io/release/v1.28.5/bin/linux/amd64/kubectl)
+下载地址：[https://dl.k8s.io/release/v1.29.1/bin/linux/amd64/kubectl](https://dl.k8s.io/release/v1.29.1/bin/linux/amd64/kubectl)
 
 下载 `kubectl`
 
 ```bash
-wget https://dl.k8s.io/release/v1.28.5/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl
+wget https://dl.k8s.io/release/v1.29.1/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl
 ```
 
 开启 `kubectl` 自动补全
@@ -1004,21 +1006,24 @@ source ~/.bashrc
 
 ### 安装 helm
 
-下载地址：[https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz](https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz)
+下载地址：[https://get.helm.sh/helm-v3.14.0-linux-amd64.tar.gz](https://get.helm.sh/helm-v3.14.0-linux-amd64.tar.gz)
 
 下载 `helm`
 
 ```bash
-wget https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz -O /tmp/kubegg/helm-v3.13.3-linux-amd64.tar.gz
+wget https://get.helm.sh/helm-v3.14.0-linux-amd64.tar.gz -O /tmp/kubegg/helm-v3.14.0-linux-amd64.tar.gz
 ```
 
 安装 `helm` 二进制文件
 
 ```bash
-tar -zxf /tmp/kubegg/helm-v3.13.3-linux-amd64.tar.gz -C /tmp/kubegg && \
+tar -zxf /tmp/kubegg/helm-v3.14.0-linux-amd64.tar.gz -C /tmp/kubegg && \
 mv /tmp/kubegg/linux-amd64/helm /usr/local/bin && \
 rm -rf /tmp/kubegg/linux-amd64 && \
 chmod +x /usr/local/bin/helm
+
+echo 'source <(helm completion bash)' >>~/.bashrc && \
+source ~/.bashrc
 ```
 
 ### 安装 calicoctl

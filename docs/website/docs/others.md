@@ -67,3 +67,10 @@ Host github.com
     User git
 EOF
 ```
+
+### SSH 跳转
+
+```bash
+ssh -J zhouleyan@192.168.2.105 root@172.16.0.130
+ssh -J zhouleyan@frp-oak.top:59417 root@172.16.0.130
+```

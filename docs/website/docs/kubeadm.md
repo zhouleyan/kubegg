@@ -37,9 +37,9 @@ systemctl restart kubelet
 cat >>/etc/hosts<<EOF
 
 # kubegg hosts BEGIN
-172.16.0.101 bpf1
-172.16.0.102 bpf2
-172.16.0.103 bpf3
+172.16.0.11 master1
+172.16.0.12 node1
+172.16.0.13 node2
 
 172.16.0.120 reg.kubegg.io
 EOF
