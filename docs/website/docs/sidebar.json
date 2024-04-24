@@ -15,5 +15,15 @@
     "kubeadm",
     "dns",
     "ntp",
+    {
+        "type": "category",
+        "label": "PostgreSQL",
+        "link": {
+            "type": "generated-index"
+        },
+        "items": [
+            "postgresql/os-init"
+        ]
+    },
     "others"
 ]

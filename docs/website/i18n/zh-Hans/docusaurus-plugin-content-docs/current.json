@@ -5,7 +5,7 @@
   },
   "sidebar.docsSidebar.category.Prepare": {
     "message": "环境准备",
-    "description": "The label for category Tutorial - Basics in sidebar docsSidebar"
+    "description": "The label for category Prepare in sidebar docsSidebar"
   },
   "sidebar.docsSidebar.category.Tutorial - Basics.link.generated-index.description": {
     "message": "5 minutes to learn the most important Docusaurus concepts.",

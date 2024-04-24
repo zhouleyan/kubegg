@@ -74,3 +74,9 @@ EOF
 ssh -J zhouleyan@192.168.2.105 root@172.16.0.130
 ssh -J zhouleyan@frp-oak.top:59417 root@172.16.0.130
 ```
+
+### Rocky Linux 8.9 删除旧内核
+
+```bash
+dnf remove --oldinstallonly kernel
+```
