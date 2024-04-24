@@ -25,5 +25,15 @@
             "postgresql/os-init"
         ]
     },
+    {
+        "type": "category",
+        "label": "RabbitMQ",
+        "link": {
+            "type": "generated-index"
+        },
+        "items": [
+            "rabbitmq/os-init"
+        ]
+    },
     "others"
 ]
