@@ -7,7 +7,7 @@
             "type": "generated-index"
         },
         "items": [
-            "prepare/os-init",
+            "prepare/debian12-init",
             "prepare/kernel-upgrade"
         ]
     },
