@@ -156,7 +156,7 @@ EOF
 ```bash
 apt update
 apt upgrade -y
-apt -y install vim sudo curl wget bash-completion net-tools tcpdump bridge-utils tree iftop telnet openssl tar apt-transport-https ca-certificates gpg chrony locate sysstat arping
+apt -y install vim sudo git curl wget bash-completion net-tools tcpdump bridge-utils tree iftop telnet openssl tar apt-transport-https ca-certificates gpg chrony locate sysstat arping dnsutils software-properties-common
 apt autoremove
 ```
 

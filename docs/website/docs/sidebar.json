@@ -8,6 +8,7 @@
         },
         "items": [
             "prepare/debian12-init",
+            "prepare/rocky8-init",
             "prepare/kernel-upgrade"
         ]
     },
@@ -35,5 +36,6 @@
             "rabbitmq/os-init"
         ]
     },
-    "others"
+    "others",
+    "kubekey"
 ]
