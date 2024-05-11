@@ -9,6 +9,7 @@
         "items": [
             "prepare/debian12-init",
             "prepare/rocky8-init",
+            "prepare/rocky8-artifact",
             "prepare/kernel-upgrade"
         ]
     },

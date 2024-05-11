@@ -55,7 +55,6 @@ systemctl restart NetworkManager
 # or
 nmcli networking off
 nmcli networking on
-
 ```
 
 ### Yum 更换国内源
@@ -67,7 +66,6 @@ sed -e 's|^mirrorlist=|#mirrorlist=|g' \
     /etc/yum.repos.d/Rocky-*.repo
 
 dnf makecache
-
 ```
 
 ### 更新包
