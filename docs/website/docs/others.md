@@ -80,3 +80,13 @@ ssh -J zhouleyan@frp-oak.top:59417 root@172.16.0.130
 ```bash
 dnf remove --oldinstallonly kernel
 ```
+
+### "|| :" 作用
+
+```bash
+# command1
+useradd -M -c 'MySQL user' -s /sbin/nologin -r mysql || :
+
+# 加入 command1 执行失败，执行”:“，相当于什么都没做，但是返回码为 “0”，不影响后续命令执行
+# 例如已经存在 mysql，执行 useradd -M -c 'MySQL user' -s /sbin/nologin -r mysql || : && echo 'success'
+```

@@ -121,7 +121,6 @@ getenforce
 ### journal 日志优化
 
 优化 journal 设置，避免日志重复搜集，浪费系统资源
-
 准备 journal 日志相关目录
 
 ```bash
