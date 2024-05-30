@@ -131,7 +131,7 @@ mkdir -p /var/log/journal
 优化设置 journal 日志
 
 ```bash title="/etc/systemd/journald.conf.d/95-rocky8-journald.conf"
-cat>/etc/systemd/journald.conf.d/95-rocky8-journald.conf<<EOF
+cat <<EOF | sudo tee /etc/systemd/journald.conf.d/95-rocky8-journald.conf
 [Journal]
 # 持久化保存到磁盘
 Storage=persistent
@@ -188,7 +188,7 @@ lsmod | grep ip_vs
 增加内核模块开机加载配置
 
 ```bash title="/etc/modules-load.d/10-rocky8-modules.conf"
-cat>/etc/modules-load.d/10-rocky8-modules.conf<<EOF
+cat <<EOF | sudo tee /etc/modules-load.d/10-rocky8-modules.conf
 br_netfilter
 ip_vs
 ip_vs_rr
