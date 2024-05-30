@@ -19,6 +19,16 @@
     "ntp",
     {
         "type": "category",
+        "label": "MySQL",
+        "link": {
+            "type": "generated-index"
+        },
+        "items": [
+            "mysql/installation"
+        ]
+    },
+    {
+        "type": "category",
         "label": "PostgreSQL",
         "link": {
             "type": "generated-index"

@@ -13,7 +13,7 @@
 ### 安装工具
 
 ```bash
-dnf install -q -y dnf-plugins-core createrepo mkisofs epel-release \
+dnf install -q -y dnf-plugins-core createrepo modulemd-tools mkisofs epel-release \
 && dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
 && dnf makecache
 
@@ -35,6 +35,7 @@ dnf repolist all | grep mysql
 # 禁用 MySQL 8.4
 dnf config-manager --disable mysql-8.4-lts-community && \
 dnf config-manager --disable mysql-tools-8.4-lts-community && \
+dnf config-manager --enable powertools && \
 dnf config-manager --enable mysql80-community && \
 dnf config-manager --enable mysql-tools-community
 
@@ -52,7 +53,10 @@ dnf module disable mysql
 ```bash
 dnf download --resolve --alldeps --downloaddir=el-8.9-x86_64-rpms vim sudo curl wget bind-utils lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils mysql-community-server
 
-createrepo -d ./el-8.9-x86_64-rpms
-
+createrepo --update -d ./el-8.9-x86_64-rpms
+cd ./el-8.9-x86_64-rpms
+repo2module ./
+createrepo_mod ./
+cd ..
 mkisofs -r -o ./el-8.9-x86_64-rpms.iso ./el-8.9-x86_64-rpms
 ```
