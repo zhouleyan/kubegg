@@ -6,7 +6,7 @@
 
 | 系统            | 最低要求            |
 | --------------- | ------------------- |
-| Rocky Linux 8.9 | CPU: 2core, RAM: 4G |
+| Rocky Linux 8.10 | CPU: 2core, RAM: 4G |
 
 ## 本地 Yum 源制作
 
@@ -17,7 +17,7 @@ dnf install -q -y dnf-plugins-core createrepo modulemd-tools mkisofs epel-releas
 && dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
 && dnf makecache
 
-yum update
+dnf update
 ```
 
 ### 添加 MySQL 源

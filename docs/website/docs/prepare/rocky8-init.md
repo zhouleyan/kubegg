@@ -2,11 +2,11 @@
 
 ## Linux 主机准备
 
-选择 Rocky Linux 8.9 操作系统
+选择 Rocky Linux 8 操作系统
 
 | 系统            | 最低要求            |
 | --------------- | ------------------- |
-| Rocky Linux 8.9 | CPU: 2core, RAM: 4G |
+| Rocky Linux 8.10 | CPU: 2core, RAM: 4G |
 
 ### 修改 hostname
 
@@ -50,7 +50,7 @@ DNS2=8.8.8.8
 DNS3=8.8.4.4
 
 # 重启网卡生效
-systemctl restart NetworkManager
+# systemctl restart NetworkManager
 
 # or
 nmcli networking off
