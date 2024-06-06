@@ -17,7 +17,7 @@ dnf install -q -y dnf-plugins-core createrepo modulemd-tools mkisofs epel-releas
 && dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
 && dnf makecache
 
-yum update
+dnf update
 ```
 
 ### 添加 MySQL 源

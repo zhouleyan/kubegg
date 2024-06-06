@@ -50,7 +50,7 @@ DNS2=8.8.8.8
 DNS3=8.8.4.4
 
 # 重启网卡生效
-systemctl restart NetworkManager
+# systemctl restart NetworkManager
 
 # or
 nmcli networking off
