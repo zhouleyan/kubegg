@@ -20,6 +20,28 @@ dnf install -q -y dnf-plugins-core createrepo modulemd-tools mkisofs epel-releas
 dnf update
 ```
 
+### 添加 Prometheus 源
+
+```bash
+curl -s https://packagecloud.io/install/repositories/prometheus-rpm/release/script.rpm.sh | sudo bash
+```
+
+### 添加 Grafana 源
+
+```bash
+cat <<EOF | sudo tee /etc/yum.repos.d/grafana.repo
+[grafana]
+name=grafana
+baseurl=https://rpm.grafana.com
+repo_gpgcheck=1
+enabled=1
+gpgcheck=1
+gpgkey=https://rpm.grafana.com/gpg.key
+sslverify=1
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+EOF
+```
+
 ### 添加 MySQL 源
 
 ```bash
@@ -51,12 +73,25 @@ dnf module disable mysql
 ### 创建 Repo
 
 ```bash
-dnf download --resolve --alldeps --downloaddir=el-8.9-x86_64-rpms vim sudo curl wget bind-utils lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils mysql-community-server
 
-createrepo --update -d ./el-8.9-x86_64-rpms
-cd ./el-8.9-x86_64-rpms
+# Common
+# vim sudo curl wget bind-utils lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils
+
+# MySQL
+# mysql-community*
+
+# Prometheus
+# grafana loki logcli promtail prometheus2 alertmanager pushgateway node_exporter blackbox_exporter nginx_exporter mysqld_exporter
+
+mkdir -p ~/el-8.10-x86_64-rpms
+
+dnf download --resolve --alldeps --downloaddir=./el-8.10-x86_64-rpms vim sudo curl wget bind-utils lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils mysql-community* grafana loki logcli promtail prometheus2 alertmanager pushgateway node_exporter blackbox_exporter nginx_exporter mysqld_exporter
+
+cd ~
+createrepo --update -d ./el-8.10-x86_64-rpms
+cd ./el-8.10-x86_64-rpms
 repo2module ./
 createrepo_mod ./
 cd ..
-mkisofs -r -o ./el-8.9-x86_64-rpms.iso ./el-8.9-x86_64-rpms
+mkisofs -r -o ./el-8.10-x86_64-rpms.iso ./el-8.10-x86_64-rpms
 ```
