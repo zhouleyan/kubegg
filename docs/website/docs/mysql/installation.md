@@ -34,7 +34,7 @@ chown -R mysql:mysql /var/lib/mysql
 ## 导入离线包
 
 ```bash
-mkdir -p /tmp/kubegg
+mkdir -p /tmp/kubegg/iso
 
 # 从 artifact 主机上传 iso 文件
 # /tmp/kubegg/el-8.10-x86_64-rpms.iso
@@ -44,8 +44,6 @@ scp el-8.10-x86_64-rpms.iso root@10.1.1.11:/tmp/kubegg
 挂载 iso 文件
 
 ```bash
-mkdir -p /tmp/kubegg/iso
-
 mount -t iso9660 -o loop /tmp/kubegg/el-8.10-x86_64-rpms.iso /tmp/kubegg/iso
 ```
 
@@ -92,6 +90,10 @@ umount /tmp/kubegg/iso
 ```bash
 rm -rf /etc/yum.repos.d
 mv /etc/yum.repos.d.kubegg.bak /etc/yum.repos.d
+```
+
+```bash
+yum clean all && yum makecache
 ```
 
 ## 创建 MySQL 文件夹
