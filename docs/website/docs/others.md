@@ -75,10 +75,14 @@ ssh -J zhouleyan@192.168.2.105 root@172.16.0.130
 ssh -J zhouleyan@frp-oak.top:59417 root@172.16.0.130
 ```
 
-### Rocky Linux 8.9 删除旧内核
+### Rocky Linux 8.10 删除旧内核
 
 ```bash
 dnf remove --oldinstallonly kernel
+
+# 升级 rescue mode kernel
+rm -f /boot/vmlinuz-0-rescue-* /boot/initramfs-0-rescue-*.img
+/usr/lib/kernel/install.d/51-dracut-rescue.install add $(uname -r) "" /lib/modules/$(uname -r)/vmlinuz
 ```
 
 ### "|| :" 作用
