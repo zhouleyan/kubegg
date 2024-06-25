@@ -94,3 +94,7 @@ useradd -M -c 'MySQL user' -s /sbin/nologin -r mysql || :
 # 加入 command1 执行失败，执行”:“，相当于什么都没做，但是返回码为 “0”，不影响后续命令执行
 # 例如已经存在 mysql，执行 useradd -M -c 'MySQL user' -s /sbin/nologin -r mysql || : && echo 'success'
 ```
+
+### Systemd
+
+所有的启动设置之前，都可以加上一个连词号（-），表示 "抑制错误"，即发生错误的时候，不影响其他命令的执行。比如，EnvironmentFile=-/etc/sysconfig/sshd（注意等号后面的那个连词号），就表示即使 / etc/sysconfig/sshd 文件不存在，也不会抛出错误。
