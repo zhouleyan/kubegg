@@ -19,6 +19,16 @@
     "ntp",
     {
         "type": "category",
+        "label": "Prometheus",
+        "link": {
+            "type": "generated-index"
+        },
+        "items": [
+            "prometheus/installation"
+        ]
+    },
+    {
+        "type": "category",
         "label": "MySQL",
         "link": {
             "type": "generated-index"
