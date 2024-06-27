@@ -2,7 +2,7 @@
 
 ## Linux 主机准备
 
-基于上一步安装完 Prometheus 的 主机，继续安装 Alertmanager
+基于上一步安装完 Prometheus 的主机，继续安装 Alertmanager
 
 ## Alertmanager 配置
 

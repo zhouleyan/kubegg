@@ -2,7 +2,7 @@
 
 ## Linux 主机准备
 
-基于上一步安装完 Alertmanager 的 主机，继续安装 Pushgateway
+基于上一步安装完 Alertmanager 的主机，继续安装 Pushgateway
 
 ## Pushgateway 配置
 

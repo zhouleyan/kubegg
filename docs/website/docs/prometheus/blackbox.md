@@ -2,7 +2,7 @@
 
 ## Linux 主机准备
 
-基于上一步安装完 Pushgateway 的 主机，继续安装 Blackbox
+基于上一步安装完 Pushgateway 的主机，继续安装 Blackbox
 
 ## Blackbox 配置
 
