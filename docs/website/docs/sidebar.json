@@ -24,7 +24,8 @@
             "type": "generated-index"
         },
         "items": [
-            "prometheus/installation"
+            "prometheus/installation",
+            "prometheus/alertmanager"
         ]
     },
     {
