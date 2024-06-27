@@ -27,7 +27,8 @@
             "prometheus/installation",
             "prometheus/alertmanager",
             "prometheus/pushgateway",
-            "prometheus/blackbox"
+            "prometheus/blackbox",
+            "prometheus/grafana"
         ]
     },
     {
