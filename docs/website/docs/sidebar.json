@@ -26,7 +26,8 @@
         "items": [
             "prometheus/installation",
             "prometheus/alertmanager",
-            "prometheus/pushgateway"
+            "prometheus/pushgateway",
+            "prometheus/blackbox"
         ]
     },
     {
