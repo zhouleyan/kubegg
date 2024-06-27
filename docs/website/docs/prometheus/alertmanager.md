@@ -90,7 +90,7 @@ chown prometheus:prometheus /etc/default/alertmanager && \
 chmod 0755 /etc/default/alertmanager
 ```
 
-### Alertmanager 启动
+## Alertmanager 启动
 
 ```bash
 systemctl enable alertmanager

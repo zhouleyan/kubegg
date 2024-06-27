@@ -94,6 +94,10 @@ usermod -aG infra prometheus
 ## 创建 Prometheus 文件夹
 
 ```bash
+mkdir -p /data/prometheus && \
+chown prometheus:prometheus /data/prometheus && \
+chmod 0700 /data/prometheus
+
 mkdir -p /data/prometheus/data && \
 chown prometheus:prometheus /data/prometheus/data && \
 chmod 0700 /data/prometheus/data
