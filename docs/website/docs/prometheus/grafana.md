@@ -61,6 +61,14 @@ datasources:
       tlsAuth: false
       tlsAuthWithCACert: false
     secureJsonData: {}
+
+  # Kubegg Logging Database (Loki)
+  - name: Loki
+    type: loki
+    uid: ds-loki
+    url: http://127.0.0.1:3100
+    access: proxy
+    editable: true
 ...
 EOF
 
