@@ -28,7 +28,8 @@
             "prometheus/alertmanager",
             "prometheus/pushgateway",
             "prometheus/blackbox",
-            "prometheus/grafana"
+            "prometheus/grafana",
+            "prometheus/loki"
         ]
     },
     {
