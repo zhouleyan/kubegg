@@ -29,7 +29,8 @@
             "prometheus/pushgateway",
             "prometheus/blackbox",
             "prometheus/grafana",
-            "prometheus/loki"
+            "prometheus/loki",
+            "prometheus/register"
         ]
     },
     {
