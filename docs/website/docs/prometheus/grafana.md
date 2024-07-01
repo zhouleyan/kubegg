@@ -78,8 +78,8 @@ chown grafana:grafana /etc/grafana/provisioning/datasources/kubegg.yml
 ### grafana.ini 配置
 
 ```bash title="/etc/grafana/grafana.ini"
-sed -i 's/^;admin_user = .*/admin_user = admin/g' /etc/grafana/grafana.ini && \
-sed -i 's/^;admin_password = .*/admin_password = kubegg/g' /etc/grafana/grafana.ini
+sed -i 's/^admin_user = .*/admin_user = admin/g' /etc/grafana/grafana.ini && \
+sed -i 's/^admin_password = .*/admin_password = kubegg/g' /etc/grafana/grafana.ini
 ```
 
 ### dashboards 配置
