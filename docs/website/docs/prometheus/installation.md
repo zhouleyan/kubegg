@@ -12,8 +12,6 @@
 
 ```bash
 cat /etc/os-release
-
-# grafana,loki,logcli,promtail,prometheus2,alertmanager,pushgateway
 ```
 
 ## 导入离线包
@@ -36,8 +34,7 @@ mount -t iso9660 -o loop /tmp/kubegg/el-8.10-x86_64-rpms.iso /tmp/kubegg/iso
 
 ```bash
 # 备份原始源
-mv /etc/yum.repos.d /etc/yum.repos.d.kubegg.bak
-
+mv /etc/yum.repos.d /etc/yum.repos.d.kubegg.bak && \
 mkdir -p /etc/yum.repos.d
 
 # 添加本地源
@@ -61,13 +58,14 @@ yum clean all && yum makecache
 ## 安装 Prometheus
 
 ```bash
-yum install grafana loki logcli promtail prometheus2 alertmanager pushgateway node_exporter blackbox_exporter
+yum install grafana loki logcli promtail prometheus2 alertmanager pushgateway node_exporter blackbox_exporter dnsmasq
 ```
 
 ## 卸载 iso 文件
 
 ```bash
 umount /tmp/kubegg/iso
+rm -rf /tmp/kubegg
 ```
 
 ## 重置源
@@ -363,7 +361,16 @@ chmod -R 0755 /etc/prometheus/bin
 
 ### Prometheus rules
 
-TODO: prometheus rules
+copy prometheus rules to `/etc/prometheus/rules`
+
+```bash title="/etc/prometheus/rules/infra.yml"
+TODO:
+```
+
+```bash
+chown -R prometheus:prometheus /etc/prometheus/rules && \
+chmod -R 0644 /etc/prometheus/rules
+```
 
 ### Prometheus 启动
 

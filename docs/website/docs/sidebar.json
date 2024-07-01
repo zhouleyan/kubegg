@@ -30,7 +30,8 @@
             "prometheus/blackbox",
             "prometheus/grafana",
             "prometheus/loki",
-            "prometheus/register"
+            "prometheus/register",
+            "prometheus/dnsmasq"
         ]
     },
     {
