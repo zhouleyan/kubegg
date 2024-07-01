@@ -61,7 +61,7 @@ yum clean all && yum makecache
 ## 安装 Prometheus
 
 ```bash
-yum install grafana loki logcli promtail prometheus2 alertmanager pushgateway node_exporter blackbox_exporter
+yum install grafana loki-2.9.8 logcli-2.9.8 promtail-2.9.8 prometheus2 alertmanager pushgateway node_exporter blackbox_exporter
 ```
 
 ## 卸载 iso 文件
