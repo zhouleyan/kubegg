@@ -158,11 +158,7 @@ sudo reboot
 
 ```bash
 dpkg --list | grep linux-image
-<<<<<<< HEAD
 # 卸载指定的旧内核
-=======
-# 卸指定的旧内核
->>>>>>> c5a7cb4f43983173f66d595cb8dd5ada067d4b3f
 apt purge linux-image-6.1.0-13-amd64
 ```
 
