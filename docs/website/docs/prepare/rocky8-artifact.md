@@ -73,7 +73,6 @@ dnf module disable mysql
 ### 创建 Repo
 
 ```bash
-
 # Common
 # vim sudo curl wget bind-utils lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils
 
