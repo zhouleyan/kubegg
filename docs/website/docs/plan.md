@@ -25,12 +25,6 @@
 5. 安装网络插件
 6. 安装 coredns,Metrics Server,openEBS or local-path-provisioner
 
-## Infra
+## Kubernetes Architecture
 
-1. prometheus
-2. alertmanager
-3. pushgateway
-4. blackbox
-5. grafana
-6. loki
-7. infra_register
+![kube_arch](./images/kube_arch.png)
