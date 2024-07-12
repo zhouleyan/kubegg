@@ -50,7 +50,7 @@ EOF
 sed -i '1s/^/nameserver 127.0.0.1\n/' /etc/resolv.conf
 
 cat <<EOF | tee /etc/hosts.d/default
-10.1.1.11 h.kubegg a.kubegg p.kubegg g.kubegg
+10.1.1.11 h.kubegg a.kubegg p.kubegg g.kubegg h.kubegg.local a.kubegg.local p.kubegg.local g.kubegg.local
 
 EOF
 ```

@@ -10,7 +10,8 @@
             "prepare/debian12-init",
             "prepare/rocky8-init",
             "prepare/rocky8-artifact",
-            "prepare/kernel-upgrade"
+            "prepare/kernel-upgrade",
+            "prepare/pki"
         ]
     },
     "plan",
@@ -31,7 +32,8 @@
             "prometheus/grafana",
             "prometheus/loki",
             "prometheus/register",
-            "prometheus/dnsmasq"
+            "prometheus/dnsmasq",
+            "prometheus/nginx"
         ]
     },
     {
