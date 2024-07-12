@@ -80,11 +80,11 @@ dnf module disable mysql
 # mysql-community*
 
 # Prometheus
-# grafana loki logcli promtail prometheus2 alertmanager pushgateway node_exporter blackbox_exporter nginx_exporter mysqld_exporter
+# grafana-11.1.0-1.x86_64 loki-2.9.8-1.x86_64 logcli-2.9.8-1.x86_64 promtail-2.9.8-1.x86_64 prometheus2 alertmanager pushgateway nginx node_exporter blackbox_exporter nginx_exporter mysqld_exporter
 
 mkdir -p ~/el-8.10-x86_64-rpms
 
-dnf download --resolve --alldeps --downloaddir=./el-8.10-x86_64-rpms vim sudo curl wget bind-utils dnsmasq lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils mysql-community* grafana-11.1.0-1.x86_64 loki-2.9.8-1.x86_64 logcli-2.9.8-1.x86_64 promtail-2.9.8-1.x86_64 prometheus2 alertmanager pushgateway node_exporter blackbox_exporter nginx_exporter mysqld_exporter
+dnf download --resolve --alldeps --downloaddir=./el-8.10-x86_64-rpms vim sudo curl wget bind-utils dnsmasq lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils mysql-community* grafana-11.1.0-1.x86_64 loki-2.9.8-1.x86_64 logcli-2.9.8-1.x86_64 promtail-2.9.8-1.x86_64 prometheus2 alertmanager pushgateway nginx node_exporter blackbox_exporter nginx_exporter mysqld_exporter
 
 cd ~ && \
 rm -rf el-8.10-x86_64-rpms/modules.yaml el-8.10-x86_64-rpms/repodata el-8.10-x86_64-rpms.iso && \

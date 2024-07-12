@@ -58,20 +58,20 @@ yum clean all && yum makecache
 ## 安装 Prometheus
 
 ```bash
-yum install grafana loki logcli promtail prometheus2 alertmanager pushgateway node_exporter blackbox_exporter dnsmasq
+yum install grafana loki logcli promtail prometheus2 alertmanager pushgateway nginx node_exporter blackbox_exporter nginx_exporter dnsmasq
 ```
 
 ## 卸载 iso 文件
 
 ```bash
-umount /tmp/kubegg/iso
+umount /tmp/kubegg/iso && \
 rm -rf /tmp/kubegg
 ```
 
 ## 重置源
 
 ```bash
-rm -rf /etc/yum.repos.d
+rm -rf /etc/yum.repos.d && \
 mv /etc/yum.repos.d.kubegg.bak /etc/yum.repos.d
 ```
 
