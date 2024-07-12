@@ -382,8 +382,8 @@ net.ipv4.udp_wmem_min                                    = 131072
 net.ipv4.neigh.default.gc_thresh1                        = 512
 net.ipv4.neigh.default.gc_thresh2                        = 2048
 net.ipv4.neigh.default.gc_thresh3                        = 4096
-net.ipv4.conf.all.rp_filter                              = 1
-net.ipv4.conf.default.rp_filter                          = 1
+net.ipv4.conf.all.rp_filter                              = 0
+net.ipv4.conf.default.rp_filter                          = 0
 net.ipv4.conf.all.arp_accept                             = 1
 net.ipv4.conf.default.arp_accept                         = 1
 net.ipv4.conf.all.arp_ignore                             = 1
@@ -972,17 +972,19 @@ systemctl daemon-reload && systemctl enable containerd && systemctl start contai
 
 ### 安装 cfssl
 
-下载地址：[https://github.com/cloudflare/cfssl/releases/download/v1.6.4/cfssl_1.6.4_linux_amd64](https://github.com/cloudflare/cfssl/releases/download/v1.6.4/cfssl_1.6.4_linux_amd64)
+下载地址：[https://github.com/cloudflare/cfssl/releases/download/v1.6.5/cfssl_1.6.5_linux_amd64](https://github.com/cloudflare/cfssl/releases/download/v1.6.5/cfssl_1.6.5_linux_amd64)
 
-下载地址：[https://github.com/cloudflare/cfssl/releases/download/v1.6.4/cfssljson_1.6.4_linux_amd64](https://github.com/cloudflare/cfssl/releases/download/v1.6.4/cfssljson_1.6.4_linux_amd64)
+下载地址：[https://github.com/cloudflare/cfssl/releases/download/v1.6.5/cfssljson_1.6.5_linux_amd64](https://github.com/cloudflare/cfssl/releases/download/v1.6.5/cfssljson_1.6.5_linux_amd64)
 
-下载 `cfssl`、`cfssljson`
+下载地址：[https://github.com/cloudflare/cfssl/releases/download/v1.6.5/cfssl-certinfo_1.6.5_linux_amd64](https://github.com/cloudflare/cfssl/releases/download/v1.6.5/cfssl-certinfo_1.6.5_linux_amd64)
+
+下载 `cfssl`、`cfssljson`、`cfssl-certinfo`
 
 ```bash
-wget https://github.com/cloudflare/cfssl/releases/download/v1.6.4/cfssl_1.6.4_linux_amd64 -O /usr/local/bin/cfssl
-wget https://github.com/cloudflare/cfssl/releases/download/v1.6.4/cfssljson_1.6.4_linux_amd64 -O /usr/local/bin/cfssljson
-
-chmod +x /usr/local/bin/cfssl /usr/local/bin/cfssljson
+wget https://github.com/cloudflare/cfssl/releases/download/v1.6.5/cfssl_1.6.5_linux_amd64 -O /usr/local/bin/cfssl && \
+wget https://github.com/cloudflare/cfssl/releases/download/v1.6.5/cfssljson_1.6.5_linux_amd64 -O /usr/local/bin/cfssljson && \
+wget https://github.com/cloudflare/cfssl/releases/download/v1.6.5/cfssl-certinfo_1.6.5_linux_amd64 -O /usr/local/bin/cfssl-certinfo && \
+chmod +x /usr/local/bin/{cfssl,cfssljson,cfssl-certinfo}
 ```
 
 ### 安装 kubectl
