@@ -26,6 +26,13 @@ dnf update
 curl -s https://packagecloud.io/install/repositories/prometheus-rpm/release/script.rpm.sh | sudo bash
 ```
 
+### 添加 PGDG 源
+
+```bash
+dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+dnf config-manager --enable pgdg-rhel8-extras
+```
+
 ### 添加 Grafana 源
 
 ```bash
@@ -82,9 +89,12 @@ dnf module disable mysql
 # Prometheus
 # grafana-11.1.0-1.x86_64 loki-2.9.8-1.x86_64 logcli-2.9.8-1.x86_64 promtail-2.9.8-1.x86_64 prometheus2 alertmanager pushgateway nginx node_exporter blackbox_exporter nginx_exporter mysqld_exporter
 
+# Others
+# haproxy keepalived keepalived_exporter iotop htop netcat socat audit lrzsz etcd readline tuned
+
 mkdir -p ~/el-8.10-x86_64-rpms
 
-dnf download --resolve --alldeps --downloaddir=./el-8.10-x86_64-rpms vim sudo curl wget bind-utils dnsmasq lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils mysql-community* grafana-11.1.0-1.x86_64 loki-2.9.8-1.x86_64 logcli-2.9.8-1.x86_64 promtail-2.9.8-1.x86_64 prometheus2 alertmanager pushgateway nginx node_exporter blackbox_exporter nginx_exporter mysqld_exporter
+dnf download --resolve --alldeps --downloaddir=./el-8.10-x86_64-rpms vim sudo curl wget bind-utils dnsmasq lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils mysql-community* grafana-11.1.0-1.x86_64 loki-2.9.8-1.x86_64 logcli-2.9.8-1.x86_64 promtail-2.9.8-1.x86_64 prometheus2 alertmanager pushgateway nginx haproxy keepalived node_exporter blackbox_exporter nginx_exporter mysqld_exporter keepalived_exporter iotop htop netcat socat audit lrzsz etcd readline tuned
 
 cd ~ && \
 rm -rf el-8.10-x86_64-rpms/modules.yaml el-8.10-x86_64-rpms/repodata el-8.10-x86_64-rpms.iso && \
