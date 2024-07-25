@@ -20,20 +20,22 @@
     "ntp",
     {
         "type": "category",
-        "label": "Prometheus",
+        "label": "Infra 节点",
         "link": {
             "type": "generated-index"
         },
         "items": [
-            "prometheus/installation",
-            "prometheus/alertmanager",
-            "prometheus/pushgateway",
-            "prometheus/blackbox",
-            "prometheus/grafana",
-            "prometheus/loki",
-            "prometheus/register",
-            "prometheus/dnsmasq",
-            "prometheus/nginx"
+            "infra/installation",
+            "infra/haproxy",
+            "infra/prometheus",
+            "infra/alertmanager",
+            "infra/pushgateway",
+            "infra/blackbox",
+            "infra/grafana",
+            "infra/loki",
+            "infra/register",
+            "infra/dnsmasq",
+            "infra/nginx"
         ]
     },
     {
