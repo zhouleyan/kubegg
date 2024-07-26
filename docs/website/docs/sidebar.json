@@ -27,6 +27,7 @@
         "items": [
             "infra/installation",
             "infra/haproxy",
+            "infra/keepalived",
             "infra/prometheus",
             "infra/alertmanager",
             "infra/pushgateway",
