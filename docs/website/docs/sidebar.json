@@ -36,7 +36,8 @@
             "infra/loki",
             "infra/register",
             "infra/dnsmasq",
-            "infra/nginx"
+            "infra/nginx",
+            "infra/monitor"
         ]
     },
     {
