@@ -23,7 +23,7 @@ After=network-online.target
 Type=forking
 PIDFile=/run/dnsmasq.pid
 ExecStart=/usr/sbin/dnsmasq
-ExecReload=/bin/kill -HUP $MAINPID
+ExecReload=/bin/kill -HUP \$MAINPID
 Restart=on-failure
 
 [Install]
