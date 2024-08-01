@@ -109,7 +109,7 @@ chmod 0755 /etc/default/prometheus
 
 ### Prometheus config
 
-```bash
+```yaml
 cat <<EOF | tee /etc/prometheus/prometheus.yml
 ---
 #--------------------------------------------------------------#
@@ -292,8 +292,37 @@ chmod -R 0755 /etc/prometheus/bin
 
 copy prometheus rules to `/etc/prometheus/rules`
 
-```bash title="/etc/prometheus/rules/infra.yml"
-TODO:
+```yaml title="/etc/prometheus/rules/infra.yml"
+cat <<EOF | tee /etc/prometheus/rules/infra.yml
+groups:
+  - name: infra_rules
+    rules: 
+      - record: infra_up
+        expr: up{job="infra"}
+
+      - record: agent_up
+        expr: up{job!~"infra|node|etcd|minio|pgsql|redis|mongo|mysql"}
+
+  - name: infra_alert
+    rules:
+      - alert: InfraDown
+        expr: infra_up < 1
+        for: 1m
+        labels: { level: 0, serverity: CRIT, category: infra }
+        annotations:
+          summary: "CRIT InfraDown {{ \$labels.type }}@{{ \$labels.instance }}"
+          description: |
+            infra_up[type={{ \$labels.type }}, instance={{ \$labels.instance }}] = {{ \$value | printf "%.2f" }} < 1
+
+      - alert: AgentDown
+        expr: agent_up < 1
+        for: 1m
+        labels: { level: 0, severity: CRIT, category: infra }
+        annotations:
+          summary: "CRIT AgentDown {{ \$labels.ins }}@{{ \$labels.instance }}"
+          description: |
+            agent_up[ins={{ \$labels.ins }}, instance={{ \$labels.instance }}] = {{ \$value | printf "%.2f" }} < 1
+EOF
 ```
 
 ```bash
