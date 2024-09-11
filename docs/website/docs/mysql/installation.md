@@ -250,8 +250,9 @@ SHOW VARIABLES LIKE 'default%';
 创建 mysqld_exporter 用户
 
 ```bash
-mysql -NBe "CREATE USER IF NOT EXISTS'dbuser_monitor'@'localhost'IDENTIFIED BY'DBUser.Monitor'WITH MAX_USER_CONNECTIONS 3;";
-mysql -NBe "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO'dbuser_monitor'@'localhost';";
+# # - { name: dbuser_monitor, host: '%', password: 'DBUser.Monitor', connlimit: 3 , priv: { "*.*": "SELECT, PROCESS, REPLICATION CLIENT" } }  
+mysql -NBe "CREATE USER IF NOT EXISTS 'dbuser_monitor'@'localhost' IDENTIFIED BY 'DBUser.Monitor' WITH MAX_USER_CONNECTIONS 3;";
+mysql -NBe "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'dbuser_monitor'@'localhost';";
 mysql -NBe "FLUSH PRIVILEGES;"
 ```
 
@@ -259,7 +260,7 @@ mysqld_exporter 配置
 
 ```bash
 cat <<EOF | tee /etc/default/mysqld_exporter
-MYSQLD_EXPORTER_OPTS="--mysqld.address=:3306 --mysqld.username='dbuser_monitor'--web.listen-address=:9104 --web.telemetry-path='/metrics'--collect.auto_increment.columns --collect.binlog_size --collect.engine_innodb_status --collect.engine_tokudb_status --collect.global_status --collect.global_variables --collect.heartbeat.utc --collect.info_schema.clientstats --collect.info_schema.innodb_metrics --collect.info_schema.innodb_tablespaces --collect.info_schema.innodb_cmp --collect.info_schema.innodb_cmpmem --collect.info_schema.processlist --collect.info_schema.query_response_time --collect.info_schema.replica_host --collect.info_schema.tables --collect.info_schema.tablestats --collect.info_schema.schemastats --collect.info_schema.userstats --collect.mysql.user --collect.perf_schema.eventsstatements --collect.perf_schema.eventsstatementssum --collect.perf_schema.eventswaits --collect.perf_schema.file_events --collect.perf_schema.file_instances --collect.perf_schema.indexiowaits --collect.perf_schema.memory_events --collect.perf_schema.tableiowaits --collect.perf_schema.tablelocks --collect.perf_schema.replication_group_members --collect.perf_schema.replication_group_member_stats --collect.perf_schema.replication_applier_status_by_worker --collect.slave_status --collect.slave_hosts --collect.sys.user_summary"
+MYSQLD_EXPORTER_OPTS="--mysqld.address=:3306 --mysqld.username='dbuser_monitor' --web.listen-address=:9104 --web.telemetry-path='/metrics' --collect.auto_increment.columns --collect.binlog_size --collect.engine_innodb_status --collect.engine_tokudb_status --collect.global_status --collect.global_variables --collect.heartbeat.utc --collect.info_schema.clientstats --collect.info_schema.innodb_metrics --collect.info_schema.innodb_tablespaces --collect.info_schema.innodb_cmp --collect.info_schema.innodb_cmpmem --collect.info_schema.processlist --collect.info_schema.query_response_time --collect.info_schema.replica_host --collect.info_schema.tables --collect.info_schema.tablestats --collect.info_schema.schemastats --collect.info_schema.userstats --collect.mysql.user --collect.perf_schema.eventsstatements --collect.perf_schema.eventsstatementssum --collect.perf_schema.eventswaits --collect.perf_schema.file_events --collect.perf_schema.file_instances --collect.perf_schema.indexiowaits --collect.perf_schema.memory_events --collect.perf_schema.tableiowaits --collect.perf_schema.tablelocks --collect.perf_schema.replication_group_members --collect.perf_schema.replication_group_member_stats --collect.perf_schema.replication_applier_status_by_worker --collect.slave_status --collect.slave_hosts --collect.sys.user_summary"
 MYSQLD_EXPORTER_PASSWORD="DBUser.Monitor"
 EOF
 
@@ -270,7 +271,62 @@ chmod 0600 /etc/default/mysqld_exporter
 mysqld_exporter 启动
 
 ```bash
+# 10.1.1.21
 systemctl restart mysqld_exporter
 systemctl enable mysqld_exporter
 systemctl daemon-reload
+```
+
+## 注册到 Prometheus
+
+### 添加 MySQL rule
+
+```bash
+cat <<EOF | tee /etc/prometheus/rules/mysql.yml
+---
+groups:
+
+  ################################################################
+  #                        MySQL Rules                           #
+  ################################################################
+  - name: mysql-rules
+    rules:
+
+  ################################################################
+  #                         MySQL Alert                          #
+  ################################################################
+  - name: mysql-alert
+    rules:
+
+      #==============================================================#
+      #                          Aliveness                           #
+      #==============================================================#
+
+      # database server down
+      - alert: MySQLDown
+        expr: mysql_up < 1
+        for: 1m
+        labels: { level: 0, severity: CRIT, category: mysql }
+        annotations:
+          summary: "CRIT MySQLDown {{ \$labels.ins }}@{{ \$labels.instance }}"
+          description: |
+            mysql_up[ins={{ \$labels.ins }}, instance={{ \$labels.instance }}] = {{ \$value }} < 1
+            http://g.kubegg.local/d/mysql-instance?var-ins={{ \$labels.ins }}
+
+...
+EOF
+```
+
+### 注册 MySQL target
+
+```bash
+# 在 infra 10.1.1.11 中执行
+# /etc/prometheus/targets
+
+cat <<EOF | tee /etc/prometheus/targets/mysql/mysql8-master01.yml
+- labels: { cls: mysql8, ins: mysql8-master01, ip: 10.1.1.21 }
+  targets:
+    - 10.1.1.21:9104
+EOF
+
 ```
