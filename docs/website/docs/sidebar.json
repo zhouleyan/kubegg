@@ -26,6 +26,7 @@
         },
         "items": [
             "infra/installation",
+            "infra/repo",
             "infra/haproxy",
             "infra/keepalived",
             "infra/prometheus",
@@ -57,7 +58,7 @@
             "type": "generated-index"
         },
         "items": [
-            "postgresql/os-init"
+            "postgresql/installation"
         ]
     },
     {
