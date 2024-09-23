@@ -86,7 +86,7 @@ EOF
 ```bash
 # 该选项会启用 / 禁用一些指标收集器，请根据您的需要进行调整。
 cat <<EOF | tee /etc/default/node_exporter
-NODE_EXPORTER_OPTS="--web.listen-address=':9100'--web.telemetry-path='/metrics'--no-collector.softnet --no-collector.nvme --collector.tcpstat --collector.processes"
+NODE_EXPORTER_OPTS="--web.listen-address=':9100' --web.telemetry-path='/metrics' --no-collector.softnet --no-collector.nvme --collector.tcpstat --collector.processes"
 EOF
 ```
 
@@ -128,7 +128,7 @@ EOF
 
 ```bash
 cat <<EOF | tee /etc/default/keepalived_exporter
-KEEPALIVED_EXPORTER_OPTS="--web.listen-address=':9650'--web.telemetry-path='/metrics'"
+KEEPALIVED_EXPORTER_OPTS="--web.listen-address=':9650' --web.telemetry-path='/metrics'"
 EOF
 ```
 
