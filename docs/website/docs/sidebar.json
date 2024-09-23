@@ -58,7 +58,8 @@
             "type": "generated-index"
         },
         "items": [
-            "postgresql/installation"
+            "postgresql/node-init",
+            "postgresql/admin"
         ]
     },
     {
