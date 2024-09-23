@@ -26,7 +26,7 @@ vrrp_instance infra {
 
   priority 128
 
-  # preempt is enabled by default
+  nopreempt
 
   advert_int 1
   unicast_src_ip 10.1.1.11
