@@ -13,37 +13,37 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 #--------------------------------------------------------------#
 # if bash is used, set shopt and prompt
-if [ -n "$BASH_VERSION" ]; then
+if [ -n "\$BASH_VERSION" ]; then
   shopt -s nocaseglob # case-insensitive globbing
   shopt -s cdspell    # auto-correct typos in cd
   set -o pipefail     # pipe fail when component fail
   shopt -s histappend # append to history rather than overwrite
   for option in autocd globstar; do
-    shopt -s "$option" 2>/dev/null
+    shopt -s "\$option" 2>/dev/null
   done
-  export PS1="\[\033]0;\w\007\]\[\]\n\[\e[1;36m\][\D{%m-%d %T}] \[\e[1;31m\]\u\[\e[1;33m\]@\H\[\e[1;32m\]:\w \[\e[1;35m\]\$ \[\e[0m\]"
+  export PS1="\[\033]0;\w\007\]\[\]\n\[\e[1;36m\][\D{%m-%d %T}] \[\e[1;31m\]\u\[\e[1;33m\]@\H\[\e[1;32m\]:\w \[\e[1;35m\]\\$ \[\e[0m\]"
 fi
 #--------------------------------------------------------------#
 # Bash settings
 export MANPAGER="less -X"
 export HISTSIZE=65535
-export HISTFILESIZE=$HISTSIZE
+export HISTFILESIZE=\$HISTSIZE
 export HISTCONTROL=ignoredups
 export HISTIGNORE="l:ls:cd:cd -:pwd:exit:date:* --help"
 #--------------------------------------------------------------#
 # Path dedupe
-if [ -n "$PATH" ]; then
- old_PATH=$PATH:
+if [ -n "\$PATH" ]; then
+ old_PATH=\$PATH:
  PATH=
- while [ -n "$old_PATH" ]; do
-  x=${old_PATH%%:*}
-  case $PATH: in
-  *:"$x":*) ;;
-  *) PATH=$PATH:$x ;;
+ while [ -n "\$old_PATH" ]; do
+  x=\${old_PATH%%:*}
+  case \$PATH: in
+  *:"\$x":*) ;;
+  *) PATH=\$PATH:\$x ;;
   esac
-  old_PATH=${old_PATH#*:}
+  old_PATH=\${old_PATH#*:}
  done
- PATH=${PATH#:}
+ PATH=\${PATH#:}
  unset old_PATH x
 fi
 #--------------------------------------------------------------#
@@ -57,7 +57,7 @@ alias h="history"
 alias m="mcli"
 alias mc="mcli"
 function v() {
- [ $# -eq 0 ] && vi . || vi $@
+ [ \$# -eq 0 ] && vi . || vi \$@
 }
 alias hg="history | grep --color=auto "
 alias py="python3"
@@ -85,15 +85,15 @@ alias ntps="sudo chronyc -a makestep"
 alias node-mt="curl -sL localhost:9100/metrics | grep -v '#' | grep node_"
 #--------------------------------------------------------------#
 # ls corlor
-[ ls --color ] >/dev/null 2>&1 && colorflag="--color" || colorflag="-G"
-[ "${TERM}" != "dumb" ] && export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:\ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:'
+[ ls --color ] >/dev/null 2>&1 && colorflag="--color" || colorflag="--color"
+[ "\${TERM}" != "dumb" ] && export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'
 alias sl=ls
-alias ll="ls -lh ${colorflag}"
-alias l="ls -lh ${colorflag}"
-alias la="ls -lha ${colorflag}"
-alias lsa="ls -a ${colorflag}"
-alias ls="command ls ${colorflag}"
-alias lsd="ls -lh ${colorflag} | grep --color=never '^d'" # List only directories
+alias ll="ls -lh \${colorflag}"
+alias l="ls -lh \${colorflag}"
+alias la="ls -lha \${colorflag}"
+alias lsa="ls -a \${colorflag}"
+alias ls="command ls \${colorflag}"
+alias lsd="ls -lh \${colorflag} | grep --color=never '^d'" # List only directories
 alias ~="cd ~"
 alias ..="cd .."
 alias cd..="cd .."
@@ -121,14 +121,14 @@ alias b64dec='python -c "import sys,base64 as b;print(b.b64decode(sys.argv[1]));
 # utils
 function tz() {
  if [ -t 0 ]; then # argument
-  tar -zcf "$1.tar.gz" "$@"
+  tar -zcf "\$1.tar.gz" "\$@"
  else # pipe
   gzip
  fi
 }
 function tx() {
  if [ -t 0 ]; then # argument
-  tar -xf $@
+  tar -xf \$@
  else # pipe
   tar -x -
  fi
@@ -143,12 +143,12 @@ __CB='\033[0;34m' # blue
 __CM='\033[0;35m' # magenta
 __CC='\033[0;36m' # cyan
 __CW='\033[0;37m' # white
-function log_info() {  printf "[${__CG} OK ${__CN}] ${__CG}$*${__CN}\n";   }
-function log_warn() {  printf "[${__CY}WARN${__CN}] ${__CY}$*${__CN}\n";   }
-function log_error() { printf "[${__CR}FAIL${__CN}] ${__CR}$*${__CN}\n";   }
-function log_debug() { printf "[${__CB}HINT${__CN}] ${__CB}$*${__CN}\n"; }
-function log_input() { printf "[${__CM} IN ${__CN}] ${__CM}$*\n=> ${__CN}"; }
-function log_hint()  { printf "${__CB}$*${__CN}"; }
+function log_info() {  printf "[\${__CG} OK \${__CN}] \${__CG}\$*\${__CN}\n";   }
+function log_warn() {  printf "[\${__CY}WARN\${__CN}] \${__CY}\$*\${__CN}\n";   }
+function log_error() { printf "[\${__CR}FAIL\${__CN}] \${__CR}\$*\${__CN}\n";   }
+function log_debug() { printf "[\${__CB}HINT\${__CN}] \${__CB}\$*\${__CN}\n"; }
+function log_input() { printf "[\${__CM} IN \${__CN}] \${__CM}\$*\n=> \${__CN}"; }
+function log_hint()  { printf "\${__CB}\$*\${__CN}"; }
 #==============================================================#
 
 EOF
