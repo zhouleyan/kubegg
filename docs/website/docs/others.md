@@ -98,3 +98,12 @@ useradd -M -c 'MySQL user' -s /sbin/nologin -r mysql || :
 ### Systemd
 
 所有的启动设置之前，都可以加上一个连词号（-），表示 "抑制错误"，即发生错误的时候，不影响其他命令的执行。比如，EnvironmentFile=-/etc/sysconfig/sshd（注意等号后面的那个连词号），就表示即使 / etc/sysconfig/sshd 文件不存在，也不会抛出错误。
+
+### Linux 命令返回码
+
+在 Linux 中，可以通过特殊变量$?来获取上一个命令的返回码。
+
+```bash
+ls /nonexistent_directory
+echo "Last command return code: $?"
+```
