@@ -81,7 +81,7 @@ ln -s /etc/pki/ca.pem /etc/pki/ca-trust/source/anchors/ca.pem
 ## 安装默认包
 
 ```bash
-sudo dnf install lz4 unzip bzip2 zlib yum pv jq git ncdu make patch bash lsof wget uuid tuned nvme-cli numactl grubby sysstat iotop htop rsync tcpdump chrony python3 netcat socat ftp lrzsz net-tools ipvsadm bind-utils telnet audit ca-certificates openssl readline vim-minimal node_exporter etcd haproxy python3-pip
+sudo dnf install lz4 unzip bzip2 zlib yum pv jq git ncdu make patch bash lsof wget uuid tuned nvme-cli numactl grubby sysstat iotop htop rsync tcpdump chrony python3 netcat socat ftp lrzsz net-tools ipvsadm bind-utils telnet audit ca-certificates openssl readline vim-minimal node_exporter etcd haproxy python3-pip promtail
 ```
 
 ## 系统功能优化
