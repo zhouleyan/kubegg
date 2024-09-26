@@ -597,10 +597,10 @@ groups:
       #            Disk Util           #
       #--------------------------------#
       - record: node:dev:disk_util_1m
-        expr: rate(node_disk_io_time_seconds_total{device=~"[a-zA-Z-_]+"}[1m])
+        expr: rate(node_disk_io_time_seconds_total{device=~"sd.*|vd.*|hd.*|nvme.*"}[1m])
 
       - record: node:dev:disk_avg_queue_size
-        expr: rate(node_disk_io_time_weighted_seconds_total{device=~"[a-zA-Z-_]+"}[1m])
+        expr: rate(node_disk_io_time_weighted_seconds_total{device=~"sd.*|vd.*|hd.*|nvme.*"}[1m])
 
 
       #--------------------------------#
@@ -609,7 +609,7 @@ groups:
 
       # disk reads request per second in last 1 minute
       - record: node:dev:disk_reads_rate1m
-        expr: rate(node_disk_reads_completed_total{device=~"[a-zA-Z-_]+"}[1m])
+        expr: rate(node_disk_reads_completed_total{device=~"sd.*|vd.*|hd.*|nvme.*"}[1m])
       - record: node:ins:disk_reads_rate1m
         expr: sum without (device) (node:dev:disk_reads_rate1m)
       - record: node:cls:disk_reads_rate1m
@@ -617,7 +617,7 @@ groups:
 
       # disk write request per second in last 1 minute
       - record: node:dev:disk_writes_rate1m
-        expr: rate(node_disk_writes_completed_total{device=~"[a-zA-Z-_]+"}[1m])
+        expr: rate(node_disk_writes_completed_total{device=~"sd.*|vd.*|hd.*|nvme.*"}[1m])
       - record: node:ins:disk_writes_rate1m
         expr: sum without (device) (node:dev:disk_writes_rate1m)
       - record: node:cls:disk_writes_rate1m
@@ -625,7 +625,7 @@ groups:
 
       # disk merged reads request per second in last 1 minute
       - record: node:dev:disk_mreads_rate1m
-        expr: rate(node_disk_reads_merged_total{device=~"[a-zA-Z-_]+"}[1m])
+        expr: rate(node_disk_reads_merged_total{device=~"sd.*|vd.*|hd.*|nvme.*"}[1m])
       - record: node:ins:disk_mreads_rate1m
         expr: sum without (device) (node:dev:disk_mreads_rate1m)
       - record: node:cls:disk_mreads_rate1m
@@ -633,7 +633,7 @@ groups:
 
       # disk merged write request per second in last 1 minute
       - record: node:dev:disk_mwrites_rate1m
-        expr: rate(node_disk_writes_merged_total{device=~"[a-zA-Z-_]+"}[1m])
+        expr: rate(node_disk_writes_merged_total{device=~"sd.*|vd.*|hd.*|nvme.*"}[1m])
       - record: node:ins:disk_mwrites_rate1m
         expr: sum without (device) (node:dev:disk_mwrites_rate1m)
       - record: node:cls:disk_mwrites_rate1m
@@ -669,7 +669,7 @@ groups:
       #--------------------------------#
       # read bandwidth (rate1m)
       - record: node:dev:disk_read_bytes_rate1m
-        expr: rate(node_disk_read_bytes_total{device=~"[a-zA-Z-_]+"}[1m])
+        expr: rate(node_disk_read_bytes_total{device=~"sd.*|vd.*|hd.*|nvme.*"}[1m])
       - record: node:ins:disk_read_bytes_rate1m
         expr: sum without (device) (node:dev:disk_read_bytes_rate1m)
       - record: node:cls:disk_read_bytes_rate1m
@@ -677,7 +677,7 @@ groups:
 
       # write bandwidth (rate1m)
       - record: node:dev:disk_write_bytes_rate1m
-        expr: rate(node_disk_written_bytes_total{device=~"[a-zA-Z-_]+"}[1m])
+        expr: rate(node_disk_written_bytes_total{device=~"sd.*|vd.*|hd.*|nvme.*"}[1m])
       - record: node:ins:disk_write_bytes_rate1m
         expr: sum without (device) (node:dev:disk_write_bytes_rate1m)
       - record: node:cls:disk_write_bytes_rate1m
@@ -695,9 +695,9 @@ groups:
       #           Disk Time            #
       #--------------------------------#
       - record: node:dev:disk_read_time_rate1m
-        expr: rate(node_disk_read_time_seconds_total{device=~"[a-zA-Z-_]+"}[1m])
+        expr: rate(node_disk_read_time_seconds_total{device=~"sd.*|vd.*|hd.*|nvme.*"}[1m])
       - record: node:dev:disk_write_time_rate1m
-        expr: rate(node_disk_write_time_seconds_total{device=~"[a-zA-Z-_]+"}[1m])
+        expr: rate(node_disk_write_time_seconds_total{device=~"sd.*|vd.*|hd.*|nvme.*"}[1m])
       - record: node:dev:disk_io_time_rate1m
         expr: node:dev:disk_read_time_rate1m + node:dev:disk_write_time_rate1m
 
