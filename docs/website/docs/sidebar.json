@@ -59,7 +59,8 @@
         },
         "items": [
             "postgresql/node-init",
-            "postgresql/admin"
+            "postgresql/admin",
+            "rocky-linux-9/rocky9-init"
         ]
     },
     {
