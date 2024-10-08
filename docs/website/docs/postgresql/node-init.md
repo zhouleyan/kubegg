@@ -81,7 +81,35 @@ ln -s /etc/pki/ca.pem /etc/pki/ca-trust/source/anchors/ca.pem
 ## 安装默认包
 
 ```bash
-sudo dnf install lz4 unzip bzip2 zlib yum pv jq git ncdu make patch bash lsof wget uuid tuned nvme-cli numactl grubby sysstat iotop htop rsync tcpdump chrony python3 netcat socat ftp lrzsz net-tools ipvsadm bind-utils telnet audit ca-certificates openssl readline vim-minimal node_exporter etcd haproxy python3-pip promtail
+# 添加 infra repo
+mv /etc/yum.repos.d /etc/yum.repos.d.kubegg.bak && \
+mkdir -p /etc/yum.repos.d
+
+cat <<EOF | tee /etc/yum.repos.d/kubegg-local.repo
+[kubegg-local]
+name=Kubegg Local Yum Repo kubegg
+
+baseurl=https://h.kubegg.local/kubegg/iso
+
+skip_if_unavailable = 1
+
+enabled=1
+
+priority = 1
+
+module_hotfixes=1
+
+gpgcheck=0
+
+EOF
+```
+
+```bash
+yum clean all && yum makecache
+```
+
+```bash
+sudo dnf install lz4 tar unzip bzip2 zlib yum pv jq git ncdu make patch bash lsof wget uuid tuned nvme-cli numactl grubby sysstat iotop htop rsync tcpdump chrony python3 netcat socat ftp lrzsz net-tools ipvsadm bind-utils telnet audit ca-certificates openssl readline vim vim-enhanced vim-minimal node_exporter etcd haproxy python3-pip promtail
 ```
 
 ## 系统功能优化
