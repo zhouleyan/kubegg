@@ -112,6 +112,13 @@ yum clean all && yum makecache
 sudo dnf install lz4 tar unzip bzip2 zlib yum pv jq git ncdu make patch bash lsof wget uuid tuned nvme-cli numactl grubby sysstat iotop htop rsync tcpdump chrony python3 netcat socat ftp lrzsz net-tools ipvsadm bind-utils telnet audit ca-certificates openssl readline vim vim-enhanced vim-minimal node_exporter etcd haproxy python3-pip promtail
 ```
 
+```bash
+# 恢复 repo
+rm -rf /etc/yum.repos.d && \
+mv /etc/yum.repos.d.kubegg.bak /etc/yum.repos.d && \
+yum clean all && yum makecache
+```
+
 ## 系统功能优化
 
 ### 功能优化
