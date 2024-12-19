@@ -85,6 +85,13 @@ rm -f /boot/vmlinuz-0-rescue-* /boot/initramfs-0-rescue-*.img
 /usr/lib/kernel/install.d/51-dracut-rescue.install add $(uname -r) "" /lib/modules/$(uname -r)/vmlinuz
 ```
 
+解决升级内核后包依赖问题
+
+```bash
+# package grub2-tools-minimal-1:2.02-158.el8_10.rocky.0.1.x86_64 from baseos is filtered out by modular filtering
+dnf --setopt=baseos.module_hotfixes=true install grub2-common grub2-pc grub2-pc-modules grub2-tools grub2-tools-extra grub2-tools-minimal
+```
+
 ### "|| :" 作用
 
 ```bash
