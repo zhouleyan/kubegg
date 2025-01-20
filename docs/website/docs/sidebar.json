@@ -73,6 +73,17 @@
             "rabbitmq/os-init"
         ]
     },
+    {
+        "type": "category",
+        "label": "ETCD",
+        "link": {
+            "type": "generated-index"
+        },
+        "items": [
+            "etcd/installation",
+            "etcd/backup"
+        ]
+    },
     "others",
     "kubekey"
 ]
