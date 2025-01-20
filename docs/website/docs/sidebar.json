@@ -48,7 +48,8 @@
             "type": "generated-index"
         },
         "items": [
-            "mysql/installation"
+            "mysql/installation",
+            "mysql/replication"
         ]
     },
     {
