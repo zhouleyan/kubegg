@@ -109,32 +109,32 @@ dnf module switch-to redis:remi-7.2
 
 ```bash
 # Common
-# vim sudo curl wget bind-utils lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils
+# vim sudo curl wget ftp bind-utils dnsmasq lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils
 
 # MySQL
-# mysql-community*
+# mysql-community-server
 
 # Prometheus
-# grafana-11.1.0-1.x86_64 loki-2.9.8-1.x86_64 logcli-2.9.8-1.x86_64 promtail-2.9.8-1.x86_64 prometheus2 alertmanager pushgateway nginx node_exporter blackbox_exporter nginx_exporter mysqld_exporter
-
-# PostgreSQL
-# postgresql16* patroni patroni-etcd pgbouncer pgbackrest pgbadger vip-manager pg_repack_16* postgis3*_16* pgvector_16* citus_16* timescaledb-2-postgresql-16*
+# grafana loki logcli promtail prometheus2 alertmanager pushgateway nginx node_exporter blackbox_exporter nginx_exporter mysqld_exporter redis_exporter keepalived_exporter
 
 # Others
-# haproxy keepalived keepalived_exporter iotop htop netcat socat audit lrzsz etcd readline tuned unzip bzip2 pv git ncdu make patch bash lsof uuid nvme-cli numactl python3 python3-pip ca-certificates zlib vim-minimal grubby openssh-server openssh-clients redis redis_exporter yum
+# haproxy keepalived iotop htop socat audit lrzsz etcd readline tuned unzip bzip2 pv git ncdu make patch bash lsof uuid nvme-cli numactl python3 python3-pip ca-certificates zlib vim-minimal grubby openssh-server openssh-clients redis
+
+# PostgreSQL
+# postgresql16* patroni patroni-etcd pgbouncer pgbackrest pgbadger vip-manager pg_repack_16* postgis3*_16* pgvector_16* citus_16* timescaledb-2-postgresql-16* postgresql17* pg_repack_17* postgis3*_17* pgvector_17* timescaledb-2-postgresql-17*
 
 mkdir -p ~/el-8.10-x86_64-rpms
 
 # add minio mcli
-wget https://dl.min.io/client/mc/release/linux-amd64/archive/mcli-20240909075310.0.0-1.x86_64.rpm -O ~/el-8.10-x86_64-rpms/mcli-20240909075310.0.0-1.x86_64.rpm && \
-wget https://dl.min.io/server/minio/release/linux-amd64/minio-20240913202602.0.0-1.x86_64.rpm -O ~/el-8.10-x86_64-rpms/minio-20240913202602.0.0-1.x86_64.rpm
+# mcli-20241121172154.0.0
+# minio-20241218131544.0.0
+wget https://dl.min.io/client/mc/release/linux-amd64/archive/mcli-20241121172154.0.0-1.x86_64.rpm -O ~/el-8.10-x86_64-rpms/mcli-20241121172154.0.0-1.x86_64.rpm && \
+wget https://dl.min.io/server/minio/release/linux-amd64/minio-20241218131544.0.0-1.x86_64.rpm -O ~/el-8.10-x86_64-rpms/minio-20241218131544.0.0-1.x86_64.rpm
 
 # add pg_exporter
-wget https://github.com/Vonng/pg_exporter/releases/download/v0.7.0/pg_exporter-0.7.0-1.x86_64.rpm -O ~/el-8.10-x86_64-rpms/pg_exporter-0.7.0-1.x86_64.rpm
+wget https://github.com/Vonng/pg_exporter/releases/download/v0.7.1/pg_exporter-0.7.1-1.x86_64.rpm -O ~/el-8.10-x86_64-rpms/pg_exporter-0.7.1-1.x86_64.rpm
 
-# postgis, timescaledb, pgvector
-
-dnf download --resolve --alldeps --downloaddir=./el-8.10-x86_64-rpms vim sudo curl wget ftp bind-utils dnsmasq lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils mysql-community* grafana-11.1.0-1.x86_64 loki-2.9.8-1.x86_64 logcli-2.9.8-1.x86_64 promtail-2.9.8-1.x86_64 prometheus2 alertmanager pushgateway nginx haproxy keepalived node_exporter blackbox_exporter nginx_exporter mysqld_exporter keepalived_exporter iotop htop netcat audit lrzsz etcd readline tuned unzip bzip2 pv git ncdu make patch bash lsof uuid nvme-cli numactl python3 python3-pip ca-certificates zlib vim-minimal grubby openssh-server openssh-clients redis redis_exporter yum postgresql16* patroni patroni-etcd pgbouncer pgbackrest pgbadger vip-manager pg_repack_16* postgis3*_16* pgvector_16* citus_16* timescaledb-2-postgresql-16*
+dnf download --resolve --alldeps --downloaddir=./el-8.10-x86_64-rpms vim sudo curl wget ftp bind-utils dnsmasq lz4 bash-completion net-tools tcpdump tree telnet openssl tar nss nss-sysinit nss-tools chrony mlocate sysstat iputils psmisc rsync libseccomp ebtables iptables ethtool nfs-utils glusterfs-client jq conntrack conntrack-tools socat ipset ipvsadm yum-utils mysql-community-server grafana loki logcli promtail prometheus2 alertmanager pushgateway nginx node_exporter blackbox_exporter nginx_exporter mysqld_exporter redis_exporter keepalived_exporter haproxy keepalived iotop htop socat audit lrzsz etcd readline tuned unzip bzip2 pv git ncdu make patch bash lsof uuid nvme-cli numactl python3 python3-pip ca-certificates zlib vim-minimal grubby openssh-server openssh-clients redis postgresql16* patroni patroni-etcd pgbouncer pgbackrest pgbadger vip-manager pg_repack_16* postgis3*_16* pgvector_16* citus_16* timescaledb-2-postgresql-16* postgresql17* pg_repack_17* postgis3*_17* pgvector_17* timescaledb-2-postgresql-17*
 
 cd ~ && \
 rm -rf el-8.10-x86_64-rpms/modules.yaml el-8.10-x86_64-rpms/repodata el-8.10-x86_64-rpms.iso && \

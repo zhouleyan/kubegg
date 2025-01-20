@@ -15,6 +15,8 @@ scp el-8.10-x86_64-rpms.iso root@10.1.1.11:/tmp/kubegg
 
 ```bash
 mount -t iso9660 -o loop /tmp/kubegg/el-8.10-x86_64-rpms.iso /www/kubegg/iso
+# 开机自动挂载
+sed -i '$a\/root\/el-8.10-x86_64-rpms.iso \/www\/kubegg\/iso       iso9660 loop,defaults   0 0\n' /etc/fstab
 ```
 
 ## 新建本地源
