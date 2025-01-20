@@ -88,7 +88,7 @@ umount /tmp/kubegg/iso
 ## 重置源
 
 ```bash
-rm -rf /etc/yum.repos.d
+rm -rf /etc/yum.repos.d && \
 mv /etc/yum.repos.d.kubegg.bak /etc/yum.repos.d
 ```
 
