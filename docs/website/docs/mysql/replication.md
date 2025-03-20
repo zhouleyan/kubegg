@@ -93,3 +93,14 @@ SHOW REPLICA STATUS\G
 ```
 
 查看 `Replica_IO_Running`、`Replica_SQL_Running` 是否都为 `Yes` ，如果是，则表示复制正常
+
+## 修改为 GTID 模式
+
+GTID_MODE 有以下取值
+
+`OFF` – 只允许匿名事务被复制同步  
+`OFF_PERMISSIVE` – 新产生的事务都是匿名事务，但也允许有 GTID 事务被复制同步  
+`ON_PERMISSIVE` – 新产生的都是 GTID 事务，但也允许有匿名事务被复制同步  
+`ON` – 只允许 GTID 事务被复制同步
+
+从该参数的几个取值我们就能看出，在线修改是循序渐进的将匿名事务转化为 GTID 事务过程（反之也一样）
